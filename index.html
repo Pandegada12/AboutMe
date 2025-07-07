@@ -7,130 +7,348 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
 
-    body {
-      font-family: 'Comic Neue', cursive;
-      background: linear-gradient(135deg, #000000, #fefdff);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    * {
+      box-sizing: border-box;
+      padding: 0;
       margin: 0;
     }
 
-    .card {
-      background: #f9f4f7;
-      border: 3px dashed #bbaacc;
-      padding: 30px;
+    body {
+      font-family: 'Comic Neue', cursive;
+      background: url('8351171.gif') no-repeat center center fixed;
+      background-size: cover;
+      overflow-x: hidden;
+      transition: background-color 0.5s ease;
+    }
+
+    .login-page {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('login.gif') no-repeat center center;
+      background-size: cover;
+      transition: opacity 1s ease;
+    }
+
+    .login-card {
+      background-color: white;
+      padding: 40px;
       border-radius: 20px;
-      max-width: 600px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
       text-align: center;
     }
 
-    h1 {
-      color: #7a5c99;
+    .login-card h1 {
       margin-bottom: 20px;
-      font-size: 32px;
+      color: #333;
     }
 
-    .section {
-      margin-bottom: 15px;
-      text-align: left;
-    }
-
-    .toggle-btn {
-      background-color: #7a5c99;
-      color: white;
+    .login-card button {
+      padding: 10px 20px;
       border: none;
-      padding: 10px 15px;
+      background-color: white;
+      color: black;
       border-radius: 10px;
       font-size: 16px;
       cursor: pointer;
-      margin-bottom: 5px;
-      transition: background-color 0.3s;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .login-card button:hover {
+      background-color: #ddd;
+      transform: scale(1.05);
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px dashed #fff;
+      color: white;
+      padding: 30px;
+      max-width: 600px;
+      margin: 80px auto;
+      border-radius: 20px;
+      text-align: center;
+      display: none;
+      transition: opacity 1s ease;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .toggle-btn {
+      background-color: transparent;
+      border: 1px solid white;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s, background-color 0.3s;
+      margin: 5px;
     }
 
     .toggle-btn:hover {
-      background-color: #5e3f7a;
+      background-color: #ffffff22;
+      transform: scale(1.05);
     }
 
     .info {
       display: none;
-      padding-left: 10px;
-      color: #444;
-      animation: fadeIn 0.5s ease-in-out forwards;
+      margin-top: 10px;
+      animation: slideUp 0.5s ease-in-out forwards;
     }
 
-    .emoji {
-      font-size: 20px;
-      margin-right: 5px;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-5px); }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    audio {
+    .notif-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background-color: rgba(30, 30, 30, 0.95);
+      color: #fff;
+      padding: 15px 30px;
+      border-radius: 20px;
+      font-size: 18px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    .notif-popup.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      pointer-events: auto;
+    }
+
+    #bonus {
       display: none;
+      margin-top: 20px;
+      font-weight: bold;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        margin: 40px 10px;
+        padding: 20px;
+      }
+
+      .toggle-btn {
+        width: 100%;
+        font-size: 16px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Musik -->
   <audio id="musik" loop>
     <source src="about_you.mp3" type="audio/mpeg">
     Browser kamu tidak mendukung audio.
   </audio>
 
-  <div class="card">
-    <h1>------ Profil ku jir ------</h1>
-
-    <div class="section">
-      <button class="toggle-btn" onclick="toggleText('nama')">👤 Tampilkan Nama</button>
-      <div id="nama" class="info">I Ketut Gada Pande Prasista</div>
-    </div>
-
-    <div class="section">
-      <button class="toggle-btn" onclick="toggleText('alamat')">🏡 Tampilkan Alamat</button>
-      <div id="alamat" class="info">Jl. Tunjung Tutur No.19x, Denpasar Utara</div>
-    </div>
-
-    <div class="section">
-      <button class="toggle-btn" onclick="toggleText('lahir')">🎂 Tampilkan Tanggal Lahir</button>
-      <div id="lahir" class="info">Denpasar, 05 Juli 2005</div>
-    </div>
-
-    <div class="section">
-      <button class="toggle-btn" onclick="toggleText('suka')">💖 Tampilkan Hal yang Disukai</button>
-      <div id="suka" class="info">
-        Kamu, Kamu, Kamu, Kamu, mie ayam, yang manis-manis seperti kamu,<br>
-        semua hal tentang Kamu. Suka tidur, suka rakit lego, suka warna hitam putih.
-      </div>
-    </div>
-
-    <div class="section">
-      <button class="toggle-btn" onclick="toggleText('takSuka')">😖 Tampilkan Hal yang Tidak Disukai</button>
-      <div id="takSuka" class="info">
-        Keramaian karena aku ingin berduaan sama kamu,<br>
-        kebisingan karena nanti suara lucu mu gak kedengeran.
-      </div>
+  <div class="login-page" id="loginPage">
+    <div class="login-card">
+      <h1>Masuk ke Dunia Gada ✨</h1>
+      <button onclick="masuk()">Masuk</button>
     </div>
   </div>
 
+  <div id="notifPopup" class="notif-popup"></div>
+
+  <div class="card" id="profilCard">
+    <h1>----- Hai cantik, silahkkan dipilih yaa -----</h1>
+
+    <div class="section">
+      <button class="toggle-btn" onclick="toggleText('nama', ' Ni Namaku~')">Tampilkan Nama</button>
+      <div id="nama" class="info">panggil aja Pande</div>
+    </div>
+
+    <div class="section">
+      <button class="toggle-btn" onclick="toggleText('alamat', 'Alamat tampil, jangan nyasar ya!')">Tampilkan Alamat</button>
+      <div id="alamat" class="info">Jl. Tunjung Tutur No.19x, Denpasar Utara. deket wkkwkwk</div>
+    </div>
+
+    <div class="section">
+      <button class="toggle-btn" onclick="toggleText('lahir', 'Ini tanggal lahirku ')">Tampilkan Tanggal Lahir</button>
+      <div id="lahir" class="info">Denpasar, 05 Juli 2005 baru kemaren wkwkwk</div>
+    </div>
+
+    <div class="section">
+      <button class="toggle-btn" onclick="toggleText('suka', 'Hal-hal yang aku suka~')">Tampilkan Hal yang Disukai</button>
+      <div id="suka" class="info">Kamu, mie ayam, warna hitam putih, lego, tidur, F1</div>
+    </div>
+
+    <div class="section">
+      <button class="toggle-btn" onclick="toggleText('takSuka', 'hal yang tidak ku suka')">Tampilkan Hal yang Tidak Disukai</button>
+      <div id="takSuka" class="info">Keramaian, kebisingan, diganggu saat laper kecuali kamu</div>
+    </div>
+
+    <div class="section">
+      <button class="toggle-btn" onclick="toggleText('pesan', 'Dari hati aku nih...')">Pesan Untuk Kamu</button>
+      <div id="pesan" class="info">Semoga harimu ceria ✨ Kamu berharga banget!</div>
+    </div>
+
+    <div class="section">
+      <button class="toggle-btn" onclick="showSecretMessage()">Pesan Rahasia </button>
+      <div id="secret" class="info"></div>
+    </div>
+
+    <div class="section">
+      <button class="toggle-btn" onclick="tebakanKu()">Main Tebakan </button>
+      <div id="tebakan" class="info"></div>
+    </div>
+
+    <div class="section">
+      <button class="toggle-btn" onclick="gameMini()">Main Mini Game </button>
+    </div>
+
+    <div class="section">
+      <button class="toggle-btn" onclick="chatbotMini()">Ngobrol Bareng GadaBot </button>
+    </div>
+
+    <div class="section">
+      <button class="toggle-btn" onclick="resetPilihan()">🔄 Reset Semua</button>
+    </div>
+
+    <div id="bonus">🎉 Kamu sudah membuka semuanya! 🎉<br>💖 Dan kamu pemenangnya di hatiku 💖</div>
+  </div>
+
   <script>
-    function toggleText(id) {
+    let opened = 0;
+    let shown = {};
+
+    function toggleText(id, message) {
       const elemen = document.getElementById(id);
-      elemen.style.display = elemen.style.display === "block" ? "none" : "block";
+      const popup = document.getElementById("notifPopup");
+      const visible = elemen.style.display === "block";
+
+      elemen.style.display = visible ? "none" : "block";
+
+      if (!visible && !shown[id]) {
+        shown[id] = true;
+        opened++;
+        if (opened >= 6) {
+          document.getElementById("bonus").style.display = "block";
+        }
+      }
+
+      popup.textContent = message;
+      popup.classList.add("show");
+      setTimeout(() => popup.classList.remove("show"), 2000);
     }
 
-    // Musik akan diputar setelah pengguna klik di mana saja
+    function resetPilihan() {
+      const infos = document.querySelectorAll('.info');
+      infos.forEach(div => {
+        div.style.display = 'none';
+      });
+
+      opened = 0;
+      shown = {};
+      document.getElementById("bonus").style.display = "none";
+
+      const popup = document.getElementById("notifPopup");
+      popup.textContent = "Semua pilihan telah di-reset 🧼";
+      popup.classList.add("show");
+      setTimeout(() => popup.classList.remove("show"), 2000);
+    }
+
+    function showSecretMessage() {
+      const password = prompt("Masukkan kata rahasia dong 🥺");
+      const secret = document.getElementById("secret");
+      if (password && password.toLowerCase() === "sayang") {
+        secret.innerHTML = "Aku benar-benar bersyukur bisa mengenal kamu...";
+      } else {
+        secret.innerHTML = "Salah, clue-nya: aku sering panggil kamu pake ini 💌";
+      }
+      secret.style.display = "block";
+    }
+
+    function tebakanKu() {
+      const jawab = prompt("Apa hal yang paling aku suka (tiga huruf)?");
+      const t = document.getElementById("tebakan");
+      if (jawab && jawab.toLowerCase().includes("tya")) {
+        t.innerHTML = "anjayy tau dia nok wkwkwk, fix cocok";
+      } else {
+        t.innerHTML = "hehehe salahhh";
+      }
+      t.style.display = "block";
+    }
+
+    function gameMini() {
+      const angka = Math.floor(Math.random() * 10) + 1;
+      const tebakan = prompt("Tebak angka dari 1 - 10 🧠");
+      if (parseInt(tebakan) === angka) {
+        alert("aisss, bener nok pantes pinter");
+      } else {
+        alert("nah salah, tapi gk apa. kmu pinter ko (jawabannya: " + angka + ")");
+      }
+    }
+
+    function chatbotMini() {
+      const tanya = prompt("Tanya aku apa aja 😊");
+      let jawaban = "";
+
+      if (!tanya) return;
+
+      const pertanyaan = tanya.toLowerCase();
+      if (pertanyaan.includes("warna")) {
+        jawaban = "Aku suka warna hitam putih 🌈";
+      } else if (pertanyaan.includes("suka")) {
+        jawaban = "Aku suka kamu, mie ayam, dan tidur 😴";
+      } else if (pertanyaan.includes("kamu siapa")) {
+        jawaban = "Aku GadaBot, asisten pribadi kamu 😎";
+      } else {
+        jawaban = "Hmmm... pertanyaan rahasia tuh ya 😆";
+      }
+      alert(jawaban);
+    }
+
+    function masuk() {
+      const loginPage = document.getElementById("loginPage");
+      loginPage.style.opacity = "0";
+
+      setTimeout(() => {
+        loginPage.style.display = "none";
+        const profil = document.getElementById("profilCard");
+        profil.style.display = "block";
+        profil.style.opacity = "0";
+
+        setTimeout(() => {
+          profil.style.transition = "opacity 1s ease";
+          profil.style.opacity = "1";
+        }, 50);
+      }, 1000);
+    }
+
     window.addEventListener('click', function () {
       const musik = document.getElementById('musik');
-      musik.volume = 1;
       musik.play();
     }, { once: true });
+
+    const hour = new Date().getHours();
+    if (hour >= 6 && hour < 18) {
+      document.body.style.backgroundColor = '#f0f0f0';
+      document.body.style.color = '#111';
+    }
   </script>
+
 </body>
 </html>
