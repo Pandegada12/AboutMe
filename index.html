@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profil Gada</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+
+    body {
+      font-family: 'Comic Neue', cursive;
+      background: linear-gradient(135deg, #000000, #fefdff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .card {
+      background: #f9f4f7;
+      border: 3px dashed #bbaacc;
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 600px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    h1 {
+      color: #7a5c99;
+      margin-bottom: 20px;
+      font-size: 32px;
+    }
+
+    .section {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .toggle-btn {
+      background-color: #7a5c99;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .toggle-btn:hover {
+      background-color: #5e3f7a;
+    }
+
+    .info {
+      display: none;
+      padding-left: 10px;
+      color: #444;
+      animation: fadeIn 0.5s ease-in-out forwards;
+    }
+
+    .emoji {
+      font-size: 20px;
+      margin-right: 5px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Musik -->
+  <audio id="musik" loop>
+    <source src="about_you.mp3.mp3" type="audio/mpeg">
+    Browser kamu tidak mendukung audio.
+  </audio>
+
+  <div class="card">
+    <h1>------ Profil ku jir ------</h1>
+
+    <div class="section">
+      <button class="toggle-btn" onclick="toggleText('nama')">👤 Tampilkan Nama</button>
+      <div id="nama" class="info">I Ketut Gada Pande Prasista</div>
+    </div>
+
+    <div class="section">
+      <button class="toggle-btn" onclick="toggleText('alamat')">🏡 Tampilkan Alamat</button>
+      <div id="alamat" class="info">Jl. Tunjung Tutur No.19x, Denpasar Utara</div>
+    </div>
+
+    <div class="section">
+      <button class="toggle-btn" onclick="toggleText('lahir')">🎂 Tampilkan Tanggal Lahir</button>
+      <div id="lahir" class="info">Denpasar, 05 Juli 2005</div>
+    </div>
+
+    <div class="section">
+      <button class="toggle-btn" onclick="toggleText('suka')">💖 Tampilkan Hal yang Disukai</button>
+      <div id="suka" class="info">
+        Kamu, Kamu, Kamu, Kamu, mie ayam, yang manis-manis seperti kamu,<br>
+        semua hal tentang Kamu. Suka tidur, suka rakit lego, suka warna hitam putih.
+      </div>
+    </div>
+
+    <div class="section">
+      <button class="toggle-btn" onclick="toggleText('takSuka')">😖 Tampilkan Hal yang Tidak Disukai</button>
+      <div id="takSuka" class="info">
+        Keramaian karena aku ingin berduaan sama kamu,<br>
+        kebisingan karena nanti suara lucu mu gak kedengeran.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleText(id) {
+      const elemen = document.getElementById(id);
+      elemen.style.display = elemen.style.display === "block" ? "none" : "block";
+    }
+
+    // Musik akan diputar setelah pengguna klik di mana saja
+    window.addEventListener('click', function () {
+      const musik = document.getElementById('musik');
+      musik.volume = 1;
+      musik.play();
+    }, { once: true });
+  </script>
+</body>
+</html>
